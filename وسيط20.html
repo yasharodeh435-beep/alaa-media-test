@@ -1,0 +1,409 @@
+&lt;!DOCTYPE html&gt;
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="أُنتج باستخدام برومبت مساعد المعلم ومصمم الموارد التعليمية المفتوحة، من إعداد الأستاذ علاء عودة">
+<!-- أُنتج هذا المورد باستخدام برومبت مساعد المعلم ومصمم الموارد التعليمية المفتوحة، من إعداد الأستاذ علاء عودة. -->
+<title>
+وسيط تعليمي تكيفي
+</title>
+<style>
+:root{--bg:#f6f4ee;--card:#fff;--ink:#23303a;--mute:#5d6b76;--line:#dcd8cc;--main:#1f6f5c;--main-ink:#fff;--ok:#1b7a43;--okbg:#e3f4e9;--warn:#8a5a00;--warnbg:#fff1d6;--bad:#9b3b2f;--badbg:#fbe7e3;--sel:#e6f0fb}
+@media (prefers-color-scheme:dark){:root{--bg:#161b1f;--card:#1f272d;--ink:#e8edf0;--mute:#a3b1ba;--line:#34414a;--main:#4fb89b;--main-ink:#10211b;--ok:#7fd9a0;--okbg:#1d3a2b;--warn:#f2c46b;--warnbg:#3a2f14;--bad:#f1a79d;--badbg:#3d2420;--sel:#243a52}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI",Tahoma,"Noto Naskh Arabic","Geeza Pro",Arial,sans-serif;font-size:18px;line-height:1.75}
+#app{max-width:680px;margin:0 auto;padding:12px 16px 24px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 0 12px}
+.ttl{font-size:15px;color:var(--mute);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dots{display:flex;gap:6px;flex-shrink:0}
+.dot{width:12px;height:12px;border-radius:50%;border:2px solid var(--line);background:transparent}
+.dot.done{background:var(--main);border-color:var(--main)}
+.dot.cur{border-color:var(--ink)}
+h1{font-size:26px;line-height:1.4;margin:8px 0}
+h2{font-size:21px;line-height:1.5;margin:16px 0 8px}
+p{margin:8px 0}
+.sub{color:var(--mute);margin-top:0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin:12px 0}
+.note{background:var(--warnbg);color:var(--warn);border-radius:12px;padding:10px 14px;font-size:16px;margin:12px 0}
+.visual{font-size:44px;text-align:center;line-height:1.3;margin:4px 0 8px;letter-spacing:6px}
+ul{padding-inline-start:22px;margin:8px 0}
+li{margin:6px 0}
+.example{background:var(--sel);border-radius:10px;padding:10px 14px;margin-top:12px}
+.btn{display:block;width:100%;min-height:52px;margin:12px 0;padding:12px 16px;border:0;border-radius:12px;background:var(--main);color:var(--main-ink);font:inherit;font-weight:700;cursor:pointer}
+.btn.alt{background:transparent;color:var(--main);border:2px solid var(--main)}
+.btn:focus-visible,.opt:focus-visible,.gi:focus-visible,summary:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.opts{display:grid;gap:10px;margin:12px 0}
+.opt{min-height:52px;padding:12px 14px;border:2px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font:inherit;text-align:start;cursor:pointer}
+.opt[disabled]{cursor:default}
+.opt.good{border-color:var(--ok);background:var(--okbg)}
+.opt.no{border-color:var(--bad);background:var(--badbg)}
+.fb{border-radius:12px;padding:12px 14px;margin:12px 0}
+.fb.good{background:var(--okbg);color:var(--ink);border:1px solid var(--ok)}
+.fb.help{background:var(--warnbg);color:var(--ink);border:1px solid var(--warn)}
+.fb>b{display:block;margin-bottom:4px}
+h1:focus,h2:focus{outline:none}
+.qtag{display:inline-block;font-size:14px;color:var(--mute);border:1px solid var(--line);border-radius:999px;padding:0 10px}
+.gcols{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.gi{min-height:52px;padding:8px 10px;border:2px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font:inherit;font-size:16px;cursor:pointer;text-align:center;line-height:1.5}
+.gi.sel{border-color:var(--main);background:var(--sel)}
+.gi.done{border-color:var(--ok);background:var(--okbg);cursor:default}
+.gmsg{min-height:28px;color:var(--mute);font-size:16px}
+.by{background:linear-gradient(135deg,#1f6f5c,#2a7f8e);color:#fff;font-size:30px;font-weight:800;text-align:center;padding:16px 12px;border-radius:16px;margin:0 0 14px;line-height:1.5;box-shadow:0 2px 8px rgba(0,0,0,.18)}
+.dg{background:var(--sel);border-radius:12px;padding:10px;margin:12px 0}.dgt{font-weight:700;text-align:center;margin-bottom:8px}
+.dgs{display:flex;flex-direction:column;gap:2px}.dgi{background:var(--card);border:2px solid var(--main);border-radius:12px;padding:8px 12px;display:flex;align-items:center;gap:10px}
+.dgn{background:var(--main);color:var(--main-ink);border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-weight:700;flex:none}
+.dgic{font-size:28px}.dga{text-align:center;color:var(--main);font-size:20px;line-height:1.2}
+.dgg{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}.dgc{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:8px}
+.dgh{font-weight:700;color:var(--main);text-align:center;border-bottom:1px solid var(--line);margin-bottom:4px}.dgc ul{margin:4px 0}.dgc li{margin:2px 0;font-size:16px}
+figure{margin:12px 0;text-align:center}figure img{max-width:100%;height:auto;border-radius:10px;background:#fff;border:1px solid var(--line)}figcaption{font-size:14px;color:var(--mute);line-height:1.6;margin-top:4px}figcaption a{color:inherit}
+details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 14px;margin:12px 0}
+summary{cursor:pointer;font-weight:700;min-height:36px}
+.chip{display:inline-block;border-radius:999px;padding:0 10px;font-size:15px;margin-inline-start:6px}
+.chip.m{background:var(--okbg);color:var(--ok)}
+.chip.r{background:var(--warnbg);color:var(--warn)}
+.chip.t{background:var(--badbg);color:var(--bad)}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:6px 0}
+.self{display:flex;gap:8px}
+.self button{flex:1;min-height:48px;font-size:24px;border:2px solid var(--line);border-radius:12px;background:var(--card);cursor:pointer}
+.self button[aria-pressed="true"]{border-color:var(--main);background:var(--sel)}
+.foot{margin-top:28px;padding-top:12px;border-top:1px solid var(--line);color:var(--mute);font-size:14px;line-height:1.7}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (max-width:360px){body{font-size:17px}h1{font-size:23px}.gcols{gap:6px}}
+@media (prefers-reduced-motion:no-preference){.gi.shake{animation:sh .3s}@keyframes sh{25%{transform:translateX(5px)}75%{transform:translateX(-5px)}}}
+
+body{background:radial-gradient(circle at 12% 8%,rgba(255,200,60,.20),transparent 38%),radial-gradient(circle at 92% 28%,rgba(60,170,200,.16),transparent 36%),var(--bg)}
+.card{border:2px solid var(--line);border-top:6px solid var(--main);box-shadow:0 3px 10px rgba(0,0,0,.07)}
+.btn{border-radius:16px;box-shadow:0 3px 0 rgba(0,0,0,.2);transition:transform .08s,box-shadow .08s}
+.btn:active{transform:translateY(2px);box-shadow:none}
+.btn.alt{box-shadow:none}
+.opt{border-radius:16px;box-shadow:0 2px 0 var(--line)}.opt:hover:not([disabled]){border-color:var(--main)}
+.scr h2{color:var(--main)}
+.owl{display:flex;align-items:flex-end;gap:10px;margin:6px 0 10px}.owlic{font-size:46px;line-height:1;flex:none}
+.bub{background:var(--sel);border-radius:16px 16px 16px 4px;padding:8px 14px;font-weight:600}
+.dot{width:auto;height:auto;border:0;background:none;font-size:17px;line-height:1}.dot::before{content:'☆'}.dot.done::before{content:'⭐'}.dot.cur{transform:scale(1.35)}
+.scard{position:relative;padding-inline-start:68px}.sn{position:absolute;inset-inline-start:14px;top:14px;width:42px;height:42px;border-radius:50%;background:var(--main);color:var(--main-ink);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:22px}
+#app{padding-bottom:84px}
+.snd{position:fixed;bottom:14px;left:14px;width:46px;height:46px;border-radius:50%;border:2px solid var(--main);background:var(--card);font-size:21px;opacity:.92;cursor:pointer;z-index:60;box-shadow:0 3px 8px rgba(0,0,0,.2)}
+.snd[hidden],.say[hidden]{display:none}
+.dgk{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}.dkc{background:var(--card);border:2px solid var(--main);border-radius:14px;padding:10px;text-align:center}.dkc .ic{font-size:36px;line-height:1.2}.dkc b{display:block;color:var(--main)}.dkc span.m{font-size:16px}
+.dst{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}.dsp{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:8px;text-align:center;position:relative}.dsp .pic{font-size:46px;line-height:1.2}.dsp .pn{position:absolute;inset-inline-start:6px;top:6px;background:var(--main);color:var(--main-ink);border-radius:50%;width:24px;height:24px;font-size:14px;display:flex;align-items:center;justify-content:center;font-weight:700}.dsp .cap{font-size:16px;line-height:1.5}
+.dgrep{text-align:center;color:var(--main);font-weight:700;margin-top:2px}
+@media (prefers-reduced-motion:no-preference){
+.scr{animation:fin .35s ease-out}@keyframes fin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.opt.good{animation:pop .35s}@keyframes pop{50%{transform:scale(1.04)}}
+.owlic{animation:bob 2.4s ease-in-out infinite}@keyframes bob{50%{transform:translateY(-4px)}}
+.cf{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:50}.cf span{position:absolute;top:-30px;animation:fall 2.2s linear forwards}@keyframes fall{to{transform:translateY(110vh) rotate(360deg)}}}
+</style>
+</head>
+<body>
+<div id="app" role="main">
+
+</div>
+<button id="sndbtn" class="snd" type="button" hidden aria-pressed="false" aria-label="تشغيل أو إيقاف الأصوات">
+🔊
+</button>
+<div id="foot" class="foot">
+
+</div>
+<script>
+var DATA = {"meta": {"title": "الثالث رياضيات", "subject": "الرابع", "grade": "الرابع", "status": "نموذج أولي يحتاج مراجعة المعلم", "gaps": "", "sessions": 2, "session_minutes": 40, "final_marks": "20", "allow_sound": "نعم", "allow_save": "نعم", "allow_final": "نعم"}, "objectives": [{"id": "o1", "text": "جمع عددين ضمن 9999 (دون حمل ومع حمل) وترتيب الأعداد بشكل صحيح تحت بعضها حسب منازلها.", "source": "official", "type": "gate", "key_content": "قبل أن نجمع أعداداً كبيرة، علينا أن نتذكر القيمة المنزلية لكل رقم في العدد 3,452: 2 في الآحاد (2)، 5 في العشرات (50)، 4 في المئات (400)، 3 في الآلاف (3000). القاعدة الذهبية للجمع: نجمع الآحاد مع الآحاد، والعشرات مع العشرات، والمئات مع المئات، والآلاف مع الآلاف. الحالة الأولى: الجمع دون حمل (مجموع أي منزلة لا يتجاوز 9). الحالة الثانية: الجمع مع حمل (مجموع منزلة ما 10 أو أكثر، نكتب الآحاد ونحمل العشرة إلى المنزلة التي تليها). نرتب الأعداد فوق بعضها، ونبدأ الجمع من الآحاد ونتجه نحو اليسار.", "terms": ["الآحاد", "العشرات", "المئات", "الآلاف", "الحمل"], "misconception": "خلط منازل الأعداد أو جمع منازل مختلفة مع بعضها بدلاً من محاذاة الآحاد تحت الآحاد والعشرات تحت العشرات.", "safety_note": "", "guide_ref": "", "competency": "", "depends_on": [], "local_examples": ""}, {"id": "o2", "text": "استخدام خصائص الجمع (مثل خاصية التبديل) للتحقق من الإجابة وحل مسائل كلامية من الحياة اليومية باستخدام عملية الجمع.", "source": "official", "type": "gate", "key_content": "خاصية التبديل تعني أن عملية الجمع تبديلية وأن الناتج سيكون نفسه دائماً، ويمكن استخدامها للتحقق من الإجابة. تقدير الناتج للتحقق السريع بتقريب كل عدد إلى أقرب ألف ثم جمعه. مسائل من الحياة اليومية مثل مسألة البستان والنوافذ وحديقة الأشجار ومكتبة المدرسة وحل المسائل الكلامية بترتيب الأعداد والبدء من الآحاد.", "terms": ["خاصية التبديل", "تقدير الناتج", "مسائل كلامية"], "misconception": "الاعتقاد بأن تغيير ترتيب الأعداد في الجمع يغير الناتج النهائي.", "safety_note": "", "guide_ref": "", "competency": "", "depends_on": ["o1"], "local_examples": ""}], "units": [{"objective_id": "o1", "title": "جمع الأعداد مع أو بدون حمل", "explain": ["قبل الجمع نتذكر قيمة كل رقم في العدد وفقاً لمنزله.", "نرتب الأعداد بحيث تتطابق الآحاد تحت الآحاد والعشرات تحت العشرات.", "نجمع الآحاد مع الآحاد أولاً ثم نتجه إلى العشرات.", "إذا كان مجموع منزلة يساوي أو يتجاوز عشرة نكتب الآحاد ونحمل العشرة.", "نستمر هكذا حتى نكمل جميع المنازل.", "النتيجة تُظهر قيمة الجمع الصحيحة وتستخدم في حل المسائل اليومية."], "example": "عند جمع 2 357 و 1 845 نضع الآحاد تحت الآحاد ثم نجمعهم.", "diagrams": [{"kind": "steps", "title": "خطوات الجمع", "items": [{"icon": "🔢", "label": "رتب الأعداد حسب المنازل"}, {"icon": "➕", "label": "اجمع الآحاد أولاً"}, {"icon": "📤", "label": "احمل العشرة إذا لزم"}]}, {"kind": "story", "title": "قصة جمع الأعداد", "panels": [{"icon": "🏫📚", "caption": "في الفصل نكتب 1 234 و 2 345 تحت بعضها"}, {"icon": "✍️", "caption": "نجمع الآحاد ونحمل العشرة"}, {"icon": "✅", "caption": "نحصل على نتيجة 3 579"}]}], "visual": {"kind": "emoji", "content": "🧮🔢✅"}, "understand_q": {"stem": "ما هو ترتيب الأعداد قبل الجمع؟", "why": "التطابق يضمن جمع منازل متساوية", "options": ["تُكتب الأعداد عشوائياً", "تحت كل منزلة توضع نفس المنزلة من العدد الآخر", "يُجمع الآلاف أولاً ثم الآحاد", "يُكتب العدد الأكبر أعلى"], "answer_index": 1}, "apply_q": {"stem": "جمع 1 236 و 2 487 بدون حمل", "why": "جمع كل منزلة ينتج 3 723", "options": ["3 723", "3 613", "3 7230", "4 723"], "answer_index": 0}, "alt_q": {"stem": "متى يستخدم حمل العشرة؟", "why": "الحمل ينتقل عندما يتجاوز المجموع عشرة", "options": ["عند مجموع أقل من عشرة", "عند جمع الآلاف فقط", "عند كتابة الأعداد", "عند مجموع منزلة يساوي عشرة أو أكثر"], "answer_index": 3}, "verify_q": {"stem": "ما هو ناتج جمع الآحاد في 2 359 و 1 648؟", "why": "2+5=7", "options": ["6", "8", "7", "9"], "answer_index": 2}, "extra_q1": {"stem": "إذا كان مجموع العشرات 12 فما هو الرقم المكتوب في منزلة العشرات؟", "why": "نكتب 2 ونحمل 1 إلى المئات", "options": ["1", "2", "3", "0"], "answer_index": 1}, "extra_q2": {"stem": "ما هو الفرق بين الجمع دون حمل ومع حمل؟", "why": "الحمل يعني نقل العشرة", "options": ["الفرق في وجود نقل عشرة إلى المنزل التالي", "الفرق في عدد المنازل", "الفرق في ترتيب الأعداد", "الفرق في كتابة الأرقام"], "answer_index": 0}, "hint1": "تأكد من محاذاة الآحاد تحت الآحاد قبل الجمع.", "support2": {"review": "الآحاد تُجمع أولاً ثم العشرات، وإذا استدعى الأمر يُحمل العشرة.", "worked_example": "جمع 1 200 و 3 400 يعطي 4 600 بعد محاذاة المنازل."}, "game": {"type": "matching", "instruction": "طابق كل منزل مع قيمته", "pairs": [["الآحاد", "2"], ["العشرات", "50"], ["المئات", "400"], ["الآلاف", "3000"]]}, "non_digital_alt": "اكتب عددين على ورقة ورتبهما تحت بعض ثم جمع كل منزل يدويًا."}, {"objective_id": "o2", "title": "خاصية التبديل وتقدير الناتج", "explain": ["خاصية التبديل تجعل جمع الأعداد لا يتأثر بترتيبها.", "بما أن الجمع تبديلي، يمكن تبديل الأعداد لتسهيل الجمع.", "تقدير الناتج يساعد على التحقق السريع من الإجابة.", "نقرب كل عدد إلى أقرب ألف ثم نجمع الأعداد المقربة.", "المقاربة تعطي قيمة قريبة من الناتج الحقيقي.", "باستخدام الخاصيتين نستطيع حل مسائل كلامية من الحياة اليومية."], "example": "في حديقة الأشجار عدد الأشجار ١٢٠٠ وشجرة إضافية ٣٠٠، نبدل الأعداد لتصبح ٣٠٠+١٢٠٠=150٠، ثم نقدر الناتج بتقريب ١٢٠٠ إلى ١٠٠٠ و٣٠٠ إلى ٠٠٠ ليصبح ١٠٠٠+٠٠٠=١٠٠٠ للتحقق السريع.", "diagrams": [{"kind": "steps", "title": "خطوات التبديل والتقدير", "items": [{"icon": "🔄", "label": "بدل ترتيب الأعداد"}, {"icon": "🔢", "label": "قرب كل عدد لأقرب ألف"}, {"icon": "➕", "label": "اجمع الأعداد المقربة"}, {"icon": "✅", "label": "قارن مع الناتج الأصلي"}]}, {"kind": "story", "title": "مسألة المكتبة", "panels": [{"icon": "📚📚📚", "caption": "عدد الكتب ٨٠٠"}, {"icon": "📚📚", "caption": "عدد دفاتر ٤٢٠"}, {"icon": "🔄", "caption": "نبدل ٤٢٠+٨٠٠"}, {"icon": "✅", "caption": "نحصل على ١٢٠٠ بعد التقدير"}]}], "visual": {"kind": "emoji", "content": "🔄➕📚"}, "understand_q": {"stem": "ما تعني خاصية التبديل في الجمع", "why": "خاصية التبديل تجعل الناتج ثابتاً مهما تغير الترتيب", "options": ["تبديل الأعداد يضاعف الناتج", "تبديل الأعداد يغير العملية إلى طرح", "تبديل الأعداد يجعل الجمع غير صحيح", "تبديل ترتيب الأعداد لا يغيّر الناتج"], "answer_index": 3}, "apply_q": {"stem": "استخدم خاصية التبديل لتجميع ٣٠٠ و٧٠٠", "why": "بالتبديل يصبح الجمع من الألف إلى الألف", "options": ["٣٠٠+٧٠٠=١٠٠٠٠", "٧٠٠-٣٠٠=٤٠٠", "٧٠٠+٣٠٠=١٠٠٠", "٣٠٠×٧٠٠=٢١٠٠٠"], "answer_index": 2}, "alt_q": {"stem": "كيف نقدر ناتج جمع ١٢٣٠ و٤٨٠ بتقريب الأعداد إلى أقرب ألف", "why": "التقريب إلى أقرب ألف يعطي تقدير سريع للناتج", "options": ["نقرب إلى أقرب مائة ثم نجمع", "نقرب ١٢٣٠ إلى ١٠٠٠ و٤٨٠ إلى ٠٠٠ ثم نجمع ١٠٠٠+٠٠٠=١٠٠٠", "نقرب إلى أقرب عشرة ثم نجمع", "نقرب إلى أقرب ألف ثم نطرح"], "answer_index": 1}, "verify_q": {"stem": "بعد جمع ٦٠٠ و٤٠٠ باستخدام خاصية التبديل، ما هو الناتج", "why": "التبديل لا يغيّر الجمع، ٦٠٠+٤٠٠=١٠٠٠", "options": ["١٠٠٠", "١٠٠", "٦٠٠", "٤٠٠"], "answer_index": 0}, "extra_q1": {"stem": "في مسألة البستان عدد الأشجار ٢٠٠٠ وشجرة إضافية ١٥٠٠، ما هو الناتج بعد التبديل والتقريب", "why": "نقرب ٢٠٠٠ إلى ٢٠٠٠ و١٥٠٠ إلى ٠٠٠ ثم نجمع", "options": ["٣٥٠٠", "٤٠٠٠", "٢٥٠٠", "٣٠٠٠"], "answer_index": 3}, "extra_q2": {"stem": "لماذا لا يغير تغيير ترتيب الأعداد في الجمع الناتج النهائي", "why": "خاصية التبديل توضح أن الجمع لا يتأثر بالترتيب", "options": ["لأن الأعداد ثابتة", "لأن العملية تعتمد على الضرب", "لأن الجمع عملية تبديلية", "لأن الترتيب يؤثر على الطرح"], "answer_index": 2}, "hint1": "تذكر أن الجمع لا يتغير إذا غيرت ترتيب الأعداد.", "support2": {"review": "خاصية التبديل تجعل الناتج ثابتاً، وتقدير الناتج يسرّع التحقق.", "worked_example": "لـ ٧٠٠+٣٠٠ نبدل إلى ٣٠٠+٧٠٠ ثم نقرب ٣٠٠ إلى ٠٠٠ و٧٠٠ إلى ١٠٠٠ للحصول على ١٠٠٠."}, "game": {"type": "matching", "instruction": "طابق كل عبارة مع مفهومها", "pairs": [["خاصية التبديل", "الناتج ثابت"], ["تقدير الناتج", "تقريب الأعداد"], ["بدل ترتيب", "يسهل الجمع"], ["تقريب للألف", "تحقق سريع"]]}, "non_digital_alt": "اكتب مجموعة من الأعداد على ورقة، بدل ترتيبها ثم جمعها لتأكد من نفس الناتج."}], "sessions": [{"n": 1, "ids": ["o1"], "est_min": 7}, {"n": 2, "ids": ["o2"], "est_min": 7}], "warnings": ["o1/understand_q: الإجابة الصحيحة أطول بكثير من المموهات (قد تُخمَّن)", "o1/alt_q: الإجابة الصحيحة أطول بكثير من المموهات (قد تُخمَّن)", "o1/extra_q2: الإجابة الصحيحة أطول بكثير من المموهات (قد تُخمَّن)", "o1: كلمات كثيرة غير واردة في نص الهدف (راجع الدقة العلمية): وفقا، بحيث، تتطابق، أولا، يساوي، نستمر، هكذا، نكمل، جميع، النتيجة، وتستخدم، توضع", "o2/alt_q: الإجابة الصحيحة أطول بكثير من المموهات (قد تُخمَّن)", "o2: كلمات كثيرة غير واردة في نص الهدف (راجع الدقة العلمية): تجعل، يتأثر، لتسهيل، يساعد، نقرب، المقربة، المقاربة، تعطي، قريبة، الحقيقي، الخاصيتين، نستطيع", "الملفات المساندة: لم تُرفع ملفات مساندة: لن يوجد ربط بدليل المعلم أو الكفايات"], "fixes": []};
+(function(){
+'use strict';
+var D=DATA||{}, meta=D.meta||{}, app=document.getElementById('app');
+var objs=D.objectives||[], units={};
+(D.units||[]).forEach(function(u){units[u.objective_id]=u;});
+var list=objs.filter(function(o){return units[o.id];});
+var QN=['understand_q','apply_q','alt_q','verify_q','extra_q1','extra_q2'];
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return '&#'+c.charCodeAt(0)+';';});}
+var SND=(meta.allow_sound!=='لا'),AC=null,MUTE=false;
+function ac(){if(AC)return AC;try{var K=window.AudioContext||window.webkitAudioContext;if(K)AC=new K();}catch(e){}return AC;}
+function tone(f,t0,d,ty,v){var a=ac();if(!a)return;try{var o=a.createOscillator(),g=a.createGain(),t=a.currentTime+t0;o.type=ty||'sine';o.frequency.setValueAtTime(f,t);g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(v||0.15,t+0.02);g.gain.exponentialRampToValueAtTime(0.0001,t+d);o.connect(g);g.connect(a.destination);o.start(t);o.stop(t+d+0.05);}catch(e){}}
+function sfx(k){if(!SND||MUTE)return;var a=ac();if(!a)return;try{if(a.state==='suspended')a.resume();}catch(e){}
+  if(k==='ok'){tone(660,0,.12);tone(880,.1,.2);}
+  else if(k==='no'){tone(320,0,.16,'triangle',.09);tone(250,.13,.22,'triangle',.07);}
+  else if(k==='click'){tone(520,0,.05,'square',.03);}
+  else if(k==='match'){tone(700,0,.08);tone(1000,.07,.16);}
+  else if(k==='win'){[523,659,784,1047].forEach(function(f,i){tone(f,i*.12,.24,'sine',.13);});}
+  else if(k==='star'){tone(784,0,.1);tone(988,.09,.1);tone(1319,.18,.22);}}
+var CHEER=['أحسنت!','ممتاز!','رائع!','إجابة صحيحة!','ما شاء الله، أحسنت!','عمل جميل!'];
+function cheer(){return CHEER[Math.floor(Math.random()*CHEER.length)];}
+function owl(msg){return '<div class="owl"><div class="owlic" aria-hidden="true">🦉</div><div class="bub">'+esc(msg)+'</div></div>';}
+function confetti(){var rm=false;try{rm=window.matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(e){}if(rm)return;
+  var em=['🎉','⭐','✨','🎈','🌟'],box=document.createElement('div');box.className='cf';box.setAttribute('aria-hidden','true');
+  for(var k=0;k<22;k++){var s=document.createElement('span');s.textContent=em[k%em.length];s.style.left=(Math.random()*96)+'%';s.style.animationDelay=(Math.random()*.5)+'s';s.style.fontSize=(18+Math.random()*16)+'px';box.appendChild(s);}
+  document.body.appendChild(box);setTimeout(function(){if(box.parentNode)box.parentNode.removeChild(box);},2600);}
+var ACC=[['#1f6f5c','#fff'],['#2a6f9e','#fff'],['#b5452f','#fff'],['#7b4a91','#fff'],['#8a5300','#fff'],['#2f5fa8','#fff']],ACCD=[['#4fb89b','#10211b'],['#6cc3e8','#0f2227'],['#f08a73','#2b120c'],['#c79be0','#23122c'],['#f2c46b','#2b2007'],['#8ab4f0','#0f1d33']];
+function accent(i){var d=false;try{d=window.matchMedia('(prefers-color-scheme: dark)').matches;}catch(e){}var p=(d?ACCD:ACC)[((i%6)+6)%6];document.documentElement.style.setProperty('--main',p[0]);document.documentElement.style.setProperty('--main-ink',p[1]);}
+var TTS=!!(window.speechSynthesis&&window.SpeechSynthesisUtterance);
+function arVoice(){try{var v=speechSynthesis.getVoices()||[];for(var i=0;i<v.length;i++){if(/^ar/i.test(v[i].lang))return v[i];}}catch(e){}return null;}
+function speak(text,btn){if(!TTS)return;try{if(speechSynthesis.speaking){speechSynthesis.cancel();if(btn)btn.setAttribute('aria-pressed','false');return;}var u=new SpeechSynthesisUtterance(text),v=arVoice();u.lang=v?v.lang:'ar-SA';if(v)u.voice=v;u.rate=.9;u.onend=function(){if(btn)btn.setAttribute('aria-pressed','false');};speechSynthesis.speak(u);if(btn)btn.setAttribute('aria-pressed','true');}catch(e){}}
+function ttsBtn(id){return TTS?'<button class="btn alt say" id="'+id+'" hidden aria-pressed="false">🔈 استمع إلى الشرح</button>':'';}
+function ttsInit(id,text){var b=document.getElementById(id);if(!b)return;function chk(){if(arVoice())b.hidden=false;}chk();try{speechSynthesis.onvoiceschanged=chk;}catch(e){}b.onclick=function(){speak(text,b);};}
+(function(){var b=document.getElementById('sndbtn');if(!b)return;if(!SND){b.hidden=true;return;}b.hidden=false;b.onclick=function(){MUTE=!MUTE;b.textContent=MUTE?'🔇':'🔊';b.setAttribute('aria-pressed',MUTE?'true':'false');if(!MUTE)sfx('click');};})();
+document.addEventListener('click',function(e){var t=e.target&&e.target.closest?e.target.closest('.btn,.gi'):null;if(t&&!t.disabled)sfx('click');},true);
+var SAVE=(meta.allow_save==='نعم'), FINALON=(meta.allow_final==='نعم');
+var KEY='adaptive-medium:'+(meta.title||'')+':'+list.length;
+var P={status:{},self:{},diag:{},seen:{}};
+if(SAVE){try{var raw=localStorage.getItem(KEY);if(raw){var r=JSON.parse(raw);if(r&&typeof r==='object'){P.status=r.status||{};P.self=r.self||{};P.diag=r.diag||{};P.seen=r.seen||{};}}}catch(e){}}
+function save(){if(!SAVE)return;try{localStorage.setItem(KEY,JSON.stringify(P));}catch(e){}}
+function clearAll(){P={status:{},self:{},diag:{},seen:{}};if(SAVE){try{localStorage.removeItem(KEY);}catch(e){}}}
+/* ---------- الحصص ---------- */
+var SES=[],CS=0,DONE={mastered:1,review:1,skipped:1,teacher:1,blocked:1};
+(function(){var idx={};list.forEach(function(o,i){idx[o.id]=i;});
+  (D.sessions||[]).forEach(function(s){var a=(s.ids||[]).map(function(id){return idx[id];}).filter(function(x){return x!==undefined;});if(a.length)SES.push({n:s.n,idx:a,est:s.est_min});});
+  if(!SES.length&&list.length){SES.push({n:1,idx:list.map(function(o,i){return i;}),est:list.length*6});}})();
+function firstOpen(k){var a=SES[k].idx;for(var m=0;m<a.length;m++){if(!P.status[list[a[m]].id])return a[m];}return -1;}
+function nextIdx(i){var a=SES[CS].idx,p=a.indexOf(i);for(var m=p+1;m<a.length;m++){if(!P.status[list[a[m]].id])return a[m];}return -1;}
+function nextOrEnd(i){var n=nextIdx(i);if(n>=0)begin(n);else sessionEnd();}
+function show(html,step){
+  var dots=list.map(function(o,i){return '<span class="dot'+(P.status[o.id]?' done':'')+(i===step?' cur':'')+'"></span>';}).join('');
+  accent(step>=0&&step<list.length?step:0);
+  app.innerHTML='<div class="top"><div class="ttl">'+esc(meta.title)+'</div><div class="dots" aria-label="تقدمك" role="img">'+dots+'</div></div><div class="scr">'+html+'</div>';
+  var f=document.getElementById('foot');if(f)f.style.display=(step===-1||step===list.length)?'':'none';
+  window.scrollTo(0,0);
+  var h=app.querySelector('h1,h2');if(h){h.setAttribute('tabindex','-1');try{h.focus({preventScroll:true});}catch(e){}}
+}
+function on(id,fn){var el=document.getElementById(id);if(el)el.onclick=fn;}
+function vis(u){var v=u.visual;return (v&&v.content)?'<div class="visual" aria-hidden="true">'+esc(v.content)+'</div>':'';}
+function dgOne(g){if(!g)return '';var h='<div class="dg" role="group" aria-label="مخطط توضيحي">';
+  if(g.title)h+='<div class="dgt">'+esc(g.title)+'</div>';
+  var k=g.kind;
+  if((k==='steps'||k==='cycle')&&g.items&&g.items.length){h+='<div class="dgs">'+g.items.map(function(it,m){return '<div class="dgi"><div class="dgn">'+(m+1)+'</div>'+(it.icon?'<div class="dgic" aria-hidden="true">'+esc(it.icon)+'</div>':'')+'<div>'+esc(it.label)+'</div></div>'+(m<g.items.length-1?'<div class="dga" aria-hidden="true">⬇</div>':'');}).join('')+(k==='cycle'?'<div class="dgrep">↻ ثم تتكرر الدورة من جديد</div>':'')+'</div>';}
+  else if(k==='groups'&&g.groups&&g.groups.length){h+='<div class="dgg">'+g.groups.map(function(x){return '<div class="dgc"><div class="dgh">'+(x.icon?'<span aria-hidden="true">'+esc(x.icon)+'</span> ':'')+esc(x.name)+'</div><ul>'+(x.items||[]).map(function(s){return '<li>'+esc(s)+'</li>';}).join('')+'</ul></div>';}).join('')+'</div>';}
+  else if(k==='cards'&&g.cards&&g.cards.length){h+='<div class="dgk">'+g.cards.map(function(c){return '<div class="dkc">'+(c.icon?'<div class="ic" aria-hidden="true">'+esc(c.icon)+'</div>':'')+'<b>'+esc(c.term)+'</b><span class="m">'+esc(c.meaning)+'</span></div>';}).join('')+'</div>';}
+  else if(k==='story'&&g.panels&&g.panels.length){h+='<div class="dst">'+g.panels.map(function(p,m){return '<div class="dsp"><span class="pn" aria-hidden="true">'+(m+1)+'</span><div class="pic" aria-hidden="true">'+esc(p.icon)+'</div><div class="cap">'+esc(p.caption)+'</div></div>';}).join('')+'</div>';}
+  else return '';
+  return h+'</div>';}
+function dgm(u,mode){var a=u.diagrams||(u.diagram?[u.diagram]:[]);if(!a.length)return '';var pk=mode==='alt'?[a[2]||a[1]||a[0]]:mode==='rev'?[a[0]]:a.slice(0,2);return pk.map(dgOne).join('');}
+function altBox(u,open){return u.non_digital_alt?'<details'+(open?' open':'')+'><summary>بديل بلا جهاز</summary><p>'+esc(u.non_digital_alt)+'</p></details>':'';}
+
+/* ---------- البداية ---------- */
+function chipFor(o){var c=CH[P.status[o.id]];return c?' <span class="chip '+c[1]+'">'+c[0]+'</span>':'';}
+function start(){
+  if(!list.length){show('<h1>'+esc(meta.title||'وسيط تعليمي')+'</h1><div class="note">لم تتوفر وحدات تعلم في هذا الملف. أخبر معلمك ليعيد إنتاجه.</div>',-1);return;}
+  var anyDone=list.some(function(o){return P.status[o.id];});
+  var h='<div class="by">تم إعداد هذا الوكيل: الأستاذ علاء عودة</div>'+owl('مرحبًا! أنا بومة العلم 🦉 سأرافقك في رحلة التعلم. اختر حصتك وابدأ.')+'<h1>'+esc(meta.title||'وسيط تعليمي')+'</h1>'+(meta.subject?'<p class="sub">'+esc(meta.subject)+'</p>':'')
+   +'<div class="note">'+esc(meta.status||'نموذج أولي يحتاج مراجعة المعلم')+': لا يُستخدم مع الطلبة قبل أن يراجعه المعلم.</div>'
+   +(meta.sessions&&meta.sessions>SES.length?'<div class="note">طلب المعلم '+meta.sessions+' حصص، لكن المحتوى المتوفر ('+list.length+' أهداف) يكفي لـ '+SES.length+' فقط. راجع تقرير المراجعة.</div>':'')
+   +'<h2>ماذا سأتعلم؟</h2><p class="sub">'+(SES.length>1?'مقسّم إلى '+SES.length+' حصص. ابدأ بالحصة التي يحددها معلمك.':'حصة واحدة.')+'</p>';
+  SES.forEach(function(s,k){
+    var items=s.idx.map(function(i){return '<li>'+esc(list[i].text)+chipFor(list[i])+'</li>';}).join('');
+    var fo=firstOpen(k),started=s.idx.some(function(i){return P.status[list[i].id];});
+    var lab=fo<0?'راجع الحصة':(started?'تابع الحصة':'ابدأ الحصة');
+    h+='<div class="card scard"><div class="sn" aria-hidden="true">'+s.n+'</div><h2>الحصة '+s.n+(s.est?' <span class="sub">(نحو '+s.est+' دقائق من العمل على الجهاز)</span>':'')+'</h2><ul>'+items+'</ul><button class="btn" data-s="'+k+'">'+lab+' '+s.n+'</button></div>';
+  });
+  h+='<h2>ماذا أحتاج؟</h2><p>هاتفك أو حاسوبك، ودفترًا وقلمًا إن أردت. لن نطلب اسمك ولا أي معلومة عنك.</p>'+(SND?'<p class="sub">🔊 يحتوي الوسيط على أصوات؛ إن أردت الهدوء فاضغط زر الصوت في الزاوية.</p>':'')
+   +'<p class="sub">'+(SAVE?'يُحفظ تقدمك في هذا المتصفح فقط ولا يُرسل إلى أي جهة، ويمكنك مسحه في أي وقت من آخر صفحة.':'لا يحفظ هذا الملف تقدمك: إذا أغلقت الصفحة تبدأ من جديد، ولا يُرسل أي شيء إلى أي جهة.')+'</p>'
+   +'<button class="btn alt" id="dg">اختبار قصير قبل البدء (اختياري)</button><p class="sub">سؤال واحد لكل هدف ليعرف الوسيط من أين تبدأ. لا يحسب عليك.</p>'
+   +(anyDone?'<button class="btn alt" id="again">ابدأ من جديد</button>':'');
+  show(h,-1);
+  app.querySelectorAll('[data-s]').forEach(function(b){b.onclick=function(){runSession(+b.getAttribute('data-s'));};});
+  on('again',function(){clearAll();start();});
+  on('dg',function(){clearAll();diag();});
+}
+function runSession(k){CS=k;var i=firstOpen(k);if(i<0)i=SES[k].idx[0];begin(i);}
+function sessionEnd(){
+  var nk=CS+1<SES.length?CS+1:-1;
+  sfx('win');confetti();show(owl('انتهت حصتك بنجاح! أنا فخورة بك.')+'<h2>انتهت الحصة '+SES[CS].n+' 🎉</h2><p>أحسنت. يمكنك مراجعة ملخصك'+(nk>=0?' أو الانتقال إلى الحصة التالية':'')+'.</p>'
+   +(nk>=0?'<button class="btn" id="ns">ابدأ الحصة '+SES[nk].n+'</button>':'')+'<button class="btn alt" id="sm">عرض ملخص رحلتي</button><button class="btn alt" id="hm">العودة إلى الحصص</button>',list.length);
+  on('ns',function(){runSession(nk);});on('sm',summary);on('hm',start);
+}
+function begin(i){
+  var o=list[i];
+  var dep=(o.depends_on||[]).filter(function(id){return P.status[id]==='teacher'||P.status[id]==='blocked';});
+  if(dep.length){P.status[o.id]='blocked';save();show('<h2>سنؤجل هذا الهدف</h2><p>هذا الهدف يعتمد على هدف احتجت فيه إلى مساعدة معلمك. سنتركه الآن، وتعود إليه بعد أن يساعدك معلمك.</p><button class="btn" id="nx">متابعة</button>',i);on('nx',function(){nextOrEnd(i);});return;}
+  C={i:i,o:o,u:units[o.id],used:{},c:0,w:0,last:'start',k:0};
+  var dg=P.diag[o.id];if(dg&&C.u[dg.n]){C.used[dg.n]=1;C.c=dg.ok?1:0;}
+  var u=C.u;
+  var ex=(u.explain||[]).map(function(s){return '<li>'+esc(s)+'</li>';}).join('');
+  show(owl('اقرأ الشرح والرسوم، ثم انتقل إلى الأسئلة.')+'<h2>'+esc(u.title||o.text)+'</h2><div class="card">'+vis(u)+'<ul>'+ex+'</ul>'+dgm(u,'main')+(u.example?'<div class="example"><b>مثال:</b> '+esc(u.example)+'</div>':'')+'</div>'+altBox(u,false)+ttsBtn('say')
+   +'<button class="btn" id="q">أنا جاهز للأسئلة</button>',i);
+  on('q',nextQ);ttsInit('say',(u.explain||[]).join('. ')+'. '+(u.example||''));
+}
+var C=null;
+
+/* ---------- الأسئلة (منطق التكيف) ---------- */
+function need(){var v=0;QN.forEach(function(n){if(validQ(C.u[n]))v++;});return Math.max(1,Math.min(3,v));}
+function pick(){
+  var order=C.last==='wrong'?['alt_q','extra_q1','verify_q','extra_q2','apply_q','understand_q']:C.last==='start'?['understand_q','apply_q','alt_q','verify_q','extra_q1','extra_q2']:['apply_q','verify_q','extra_q1','extra_q2','alt_q','understand_q'];
+  for(var k=0;k<order.length;k++){var n=order[k],q=C.u[n];if(!C.used[n]&&q&&q.options&&q.options.length>1)return n;}
+  return null;
+}
+function nextQ(){
+  var n=pick();
+  if(!n){finishObjective(C.c>=need()?'mastered':'review');return;}
+  C.used[n]=1;C.cur=n;
+  var q=C.u[n],opts=q.options.map(function(t,i){return '<button class="opt" data-i="'+i+'">'+esc(t)+'</button>';}).join('');
+  show('<span class="qtag">سؤال '+(C.k=(C.k||0)+1)+'</span><h2>'+esc(q.stem)+'</h2><div class="opts" role="group" aria-label="الخيارات">'+opts+'</div><div id="fb" aria-live="polite"></div>',C.i);
+  var bs=app.querySelectorAll('.opt');
+  for(var i=0;i<bs.length;i++){bs[i].onclick=answer;}
+}
+function answer(ev){
+  var b=ev.currentTarget,idx=+b.getAttribute('data-i'),q=C.u[C.cur],bs=app.querySelectorAll('.opt'),fb=document.getElementById('fb');
+  for(var i=0;i<bs.length;i++){bs[i].disabled=true;}
+  if(idx===q.answer_index){
+    C.c++;C.last='right';b.className='opt good';b.innerHTML='✔ '+b.innerHTML;
+    var done=C.c>=need();
+    sfx('ok');fb.innerHTML='<div class="fb good"><b>🦉 '+cheer()+'</b>'+esc(q.why||'')+'</div><button class="btn" id="nx">'+(done?'أتقنت هذا الهدف، تابع':'التالي')+'</button>';
+    on('nx',function(){done?finishObjective('mastered'):nextQ();});
+  }else{
+    C.w++;C.last='wrong';b.className='opt no';b.innerHTML='✖ '+b.innerHTML;sfx('no');
+    if(C.w>=3){
+      fb.innerHTML='<div class="fb help"><b>لا بأس، لنأخذ استراحة من هذا الجزء.</b>تعثّرك هنا لا يعني شيئًا سيئًا، فهو يخبرنا أن هذا الهدف يحتاج شرحًا معك.</div><button class="btn" id="nx">متابعة</button>';
+      on('nx',function(){finishObjective(C.o.type==='gate'?'teacher':C.o.type==='enrichment'?'skipped':'review');});
+      return;
+    }
+    var u=C.u,h='';
+    if(C.w===1){h='<b>لا بأس، فكّر معنا من جديد.</b>'+esc(u.hint1||'')+'<div style="margin-top:8px">'+vis(u)+dgm(u,'alt')+(u.example?'<div class="example"><b>مثال:</b> '+esc(u.example)+'</div>':'')+'</div>';}
+    else{var s=u.support2||{};h='<b>لنعد خطوة إلى الخلف.</b>'+esc(s.review||'')+dgm(u,'rev')+(s.worked_example?'<div class="example"><b>مثال محلول جزئيًا:</b> '+esc(s.worked_example)+'</div>':'');}
+    fb.innerHTML='<div class="fb help">'+h+'</div><button class="btn" id="nx">جرّب سؤالًا آخر</button>';
+    on('nx',nextQ);
+  }
+}
+
+/* ---------- نهاية الهدف ---------- */
+function finishObjective(st){
+  P.status[C.o.id]=st;P.seen[C.o.id]=Object.keys(C.used);save();
+  if(st==='mastered'){sfx('win');confetti();}else if(st==='review'){sfx('star');}
+  if(st==='teacher'){referral();return;}
+  if(st==='mastered'&&C.u.game&&C.u.game.pairs&&C.u.game.pairs.length>=2){game();return;}
+  after(st);
+}
+function after(st){
+  var last=nextIdx(C.i)<0;
+  var msg=st==='mastered'?'<h2>أتقنت هذا الهدف ✔</h2><p>عمل جميل. انتقل إلى الهدف التالي.</p>':st==='review'?'<h2>أنهينا هذا الهدف</h2><p>يُفضّل أن تراجعه مرة أخرى لاحقًا أو تسأل معلمك عنه، ثم تابع.</p>':'<h2>تجاوزنا هذا الجزء الإثرائي</h2><p>هو اختياري ولا يمنع المتابعة.</p>';
+  show((st==='mastered'?owl('أحسنت! أضفت نجمة جديدة ⭐'):'')+msg+'<button class="btn" id="nx">'+(last?'إنهاء الحصة':'الهدف التالي')+'</button>',C.i);
+  on('nx',function(){nextOrEnd(C.i);});
+}
+function referral(){
+  show('<h2>هذا الجزء يحتاج معلمك 💙</h2><p>وصلنا إلى هدف «'+esc(C.o.text)+'» وتحتاج هنا إلى شرح مباشر. قل لمعلمك: «أحتاج مساعدة في هذا الهدف». لا تقلق، فهذا لا يؤثر على تقويمك.</p>'+altBox(C.u,true)
+   +'<p>سنكمل بقية الأهداف المستقلة عنه.</p><button class="btn" id="nx">متابعة</button>',C.i);
+  on('nx',function(){nextOrEnd(C.i);});
+}
+
+/* ---------- اللعبة (مطابقة) ---------- */
+function game(){
+  var g=C.u.game,pairs=g.pairs.filter(function(p){return p&&p.length===2;}),n=pairs.length,order=[];
+  for(var k=0;k<n;k++)order.push((k+C.i+1)%n);
+  var L=pairs.map(function(p,i){return '<button class="gi" data-l="'+i+'">'+esc(p[0])+'</button>';}).join('');
+  var R=order.map(function(j){return '<button class="gi" data-r="'+j+'">'+esc(pairs[j][1])+'</button>';}).join('');
+  show('<h2>لعبة صغيرة 🎯</h2><p>'+esc(g.instruction||'طابق كل عنصر بما يناسبه.')+' اضغط عنصرًا من اليمين ثم ما يناسبه من اليسار. لا وقت محدد.</p><div class="gcols"><div class="gc">'+L+'</div><div class="gc">'+R+'</div></div><div class="gmsg" id="gm" aria-live="polite"></div>'+altBox(C.u,false)
+   +'<button class="btn alt" id="skip">تخطَّ اللعبة</button>',C.i);
+  var sel=null,matched=0,gm=document.getElementById('gm');
+  function clear(){var s=app.querySelectorAll('.gi.sel');for(var i=0;i<s.length;i++)s[i].classList.remove('sel');}
+  app.querySelectorAll('.gi').forEach(function(el){
+    el.onclick=function(){
+      if(el.classList.contains('done'))return;
+      if(el.hasAttribute('data-l')){clear();sel=el;el.classList.add('sel');gm.textContent='';return;}
+      if(!sel){gm.textContent='اختر عنصرًا من العمود الأول أولًا.';return;}
+      var li=+sel.getAttribute('data-l'),rj=+el.getAttribute('data-r');
+      if(li===rj||pairs[li][1]===pairs[rj][1]){
+        sel.classList.remove('sel');sel.classList.add('done');el.classList.add('done');sel.innerHTML='✔ '+sel.innerHTML;el.innerHTML='✔ '+el.innerHTML;sel=null;matched++;sfx('match');gm.textContent='مطابقة صحيحة!';
+        if(matched===n){gm.textContent='أحسنت! أكملت اللعبة.';sfx('win');confetti();show2();}
+      }else{sfx('no');el.classList.add('shake');setTimeout(function(){el.classList.remove('shake');},350);gm.textContent='ليست هذه المطابقة، جرّب مرة أخرى.';}
+    };
+  });
+  function show2(){var b=document.getElementById('skip');b.textContent='متابعة';b.className='btn';}
+  on('skip',function(){after('mastered');});
+}
+
+/* ---------- اختبار قصير + تقويم ختامي ---------- */
+function validQ(q){return q&&q.options&&q.options.length>1&&typeof q.answer_index==='number';}
+function quiz(items,mode,onDone){
+  var k=0,res=[];
+  function ask(){
+    if(k>=items.length){onDone(res);return;}
+    var it=items[k],q=it.q;
+    var opts=q.options.map(function(t,i){return '<button class="opt" data-i="'+i+'">'+esc(t)+'</button>';}).join('');
+    show('<span class="qtag">'+(mode==='final'?'التقويم الختامي':'الاختبار القصير')+' · '+(k+1)+' من '+items.length+'</span><h2>'+esc(q.stem)+'</h2><div class="opts" role="group" aria-label="الخيارات">'+opts+'</div><div id="fb" aria-live="polite"></div>',-2);
+    var bs=app.querySelectorAll('.opt');
+    for(var i=0;i<bs.length;i++){bs[i].onclick=function(ev){
+      var b=ev.currentTarget,idx=+b.getAttribute('data-i'),ok=idx===q.answer_index,fb=document.getElementById('fb');
+      for(var j=0;j<bs.length;j++){bs[j].disabled=true;}
+      res.push({o:it.o,n:it.n,ok:ok});
+      var last=k>=items.length-1,btn='<button class="btn" id="nx">'+(last?'عرض النتيجة':'التالي')+'</button>';
+      if(mode==='final'){
+        b.className='opt '+(ok?'good':'no');b.innerHTML=(ok?'✔ ':'✖ ')+b.innerHTML;
+        if(!ok){bs[q.answer_index].className='opt good';}
+        fb.innerHTML='<div class="fb '+(ok?'good':'help')+'"><b>'+(ok?'أحسنت!':'ليست هذه الإجابة.')+'</b>'+(ok?'':'الإجابة الصحيحة: '+esc(q.options[q.answer_index])+'. ')+esc(q.why||'')+'</div>'+btn;
+      }else{
+        b.className='opt sel';
+        fb.innerHTML='<div class="fb good"><b>تم تسجيل إجابتك.</b></div>'+btn;
+      }
+      on('nx',function(){k++;ask();});
+    };}
+  }
+  ask();
+}
+function diag(){
+  var items=[];
+  list.forEach(function(o){var q=units[o.id].understand_q;if(validQ(q))items.push({o:o,n:'understand_q',q:q});});
+  if(!items.length){begin(0);return;}
+  quiz(items,'diag',function(res){
+    res.forEach(function(r){P.diag[r.o.id]={n:r.n,ok:r.ok};});save();
+    var rows=res.map(function(r){return '<div class="card"><div class="row"><b>'+esc(r.o.text)+'</b><span class="chip '+(r.ok?'m':'r')+'">'+(r.ok?'تبدو متمكنًا':'سنشرحه معًا')+'</span></div></div>';}).join('');
+    show('<h2>نتيجة الاختبار القصير</h2><p>هذه صورة أولية فقط، وليست علامة. سنمر على كل الأهداف، وستكون الأسئلة أسهل في الأهداف التي أجبت عنها صحيحًا.</p>'+rows+'<button class="btn" id="go2">ابدأ التعلم</button>',-2);
+    on('go2',function(){runSession(0);});
+  });
+}
+function finalQ(){
+  var items=[],order=['verify_q','apply_q','alt_q','understand_q'];
+  list.forEach(function(o){
+    var u=units[o.id],seen=P.seen[o.id]||[],pk=null,k;
+    for(k=0;k<order.length;k++){if(seen.indexOf(order[k])<0&&validQ(u[order[k]])){pk=order[k];break;}}
+    if(!pk){for(k=0;k<order.length;k++){if(validQ(u[order[k]])){pk=order[k];break;}}}
+    if(pk)items.push({o:o,n:pk,q:u[pk]});
+  });
+  if(!items.length){summary();return;}
+  quiz(items,'final',function(res){
+    var good=res.filter(function(r){return r.ok;}).length;
+    var rows=res.map(function(r){return '<div class="card"><div class="row"><b>'+esc(r.o.text)+'</b><span class="chip '+(r.ok?'m':'r')+'">'+(r.ok?'أجبت صحيحًا':'يحتاج مراجعة')+'</span></div></div>';}).join('');
+    show('<h2>نتيجة التقويم الختامي</h2><p>أجبت صحيحًا عن '+good+' من '+res.length+'. هذا تقويم ذاتي يساعدك على معرفة ما تراجعه، ولا يُرسل إلى أي جهة.</p>'+rows+(good<res.length?'<p>راجع الأهداف التي عليها «يحتاج مراجعة» أو اسأل معلمك عنها.</p>':'<p>عمل رائع! أنت مستعد للانتقال إلى ما بعد هذا الدرس.</p>')+'<button class="btn" id="sm">العودة إلى ملخص رحلتي</button>',-2);
+    on('sm',summary);
+  });
+}
+
+/* ---------- الملخص ---------- */
+var CH={mastered:['أتقنت','m'],review:['أحتاج مراجعة','r'],teacher:['اطلب مساعدة المعلم','t'],skipped:['تخطيت','r'],blocked:['ينتظر مساعدة المعلم','t']};
+function summary(){
+  var rows=list.map(function(o){
+    var st=P.status[o.id],c=CH[st],sv=P.self[o.id];
+    var b=['😟','😐','😊'].map(function(e,k){return '<button data-o="'+esc(o.id)+'" data-v="'+(k+1)+'" aria-pressed="'+(sv===k+1)+'" aria-label="تقديري لنفسي '+(k+1)+' من 3">'+e+'</button>';}).join('');
+    return '<div class="card"><div class="row"><b>'+esc(o.text)+'</b>'+(c?'<span class="chip '+c[1]+'">'+c[0]+'</span>':'<span class="chip r">لم أبدأ بعد</span>')+'</div><div class="self" role="group" aria-label="كيف أرى نفسي في هذا الهدف؟">'+b+'</div></div>';
+  }).join('');
+  var miss=objs.filter(function(o){return !units[o.id];});
+  var mh=miss.length?'<div class="note">لم تتوفر وحدة تعلم للأهداف: '+miss.map(function(o){return esc(o.text);}).join('، ')+'. اسأل معلمك عنها.</div>':'';
+  show('<h2>ملخص رحلتي</h2><p>اضغط الوجه الذي يعبّر عن شعورك تجاه كل هدف: 😟 ما زلت أحتاج مساعدة، 😐 أفهمه قليلًا، 😊 أفهمه جيدًا.</p>'+rows+mh
+   +'<details><summary>متى أطلب مساعدة معلمي؟</summary><ul><li>إذا أخطأت في سؤال بعد التلميح والمثال.</li><li>إذا لم أفهم الشرح بعد قراءته مرتين.</li><li>إذا شعرت أن الجهاز لا يعمل أو لا أستطيع إكمال النشاط.</li></ul></details>'
+   +(FINALON?'<button class="btn" id="fin">التقويم الختامي (اختياري)</button>':'')+'<button class="btn alt" id="hm">العودة إلى الحصص</button><button class="btn alt" id="redo">ابدأ من جديد</button>'+(SAVE?'<button class="btn alt" id="wipe">امسح تقدمي من هذا الجهاز</button>':''),list.length);
+  app.querySelectorAll('.self button').forEach(function(b){b.onclick=function(){P.self[b.getAttribute('data-o')]=+b.getAttribute('data-v');save();summary();};});
+  on('fin',finalQ);
+  on('hm',start);
+  on('redo',function(){clearAll();start();});
+  on('wipe',function(){clearAll();start();});
+}
+
+document.getElementById('foot').innerHTML='<p>أُنتج هذا المورد باستخدام برومبت مساعد المعلم ومصمم الموارد التعليمية المفتوحة، من إعداد الأستاذ علاء عودة.</p><p>هذا المورد نموذج أولي أُنتج بمساعدة الذكاء الاصطناعي. لا يُستخدم مع الطلبة ولا يُنشر قبل مراجعة المعلم لصحة المحتوى، وتطابقه مع المنهاج، وملاءمته للسياق المحلي، وسلامة الأنشطة، وحقوق استخدام عناصره. يبقى قرار الاعتماد والتعديل والنشر مسؤولية المعلم والمؤسسة التعليمية.</p>';
+(function(){
+  var w=D.warnings||[],f=D.fixes||[];
+  function li(a){return a.map(function(x){return '<li>'+esc(x)+'</li>';}).join('');}
+  var h='<details id="tn"><summary>ملاحظات للمعلم (للمراجعة قبل مشاركة الوسيط مع الطلبة)</summary>'
+   +'<p>هذا القسم موجّه للمعلم وحده. احذفه أو لا تشارك الملف مع الطلبة قبل مراجعته.</p>';
+  h+=(w.length?'<p><b>ملاحظات تحتاج مراجعتك ('+w.length+'):</b></p><ul>'+li(w)+'</ul>':'<p>لم تُرصد ملاحظات تحتاج مراجعة خاصة، لكن المراجعة العامة تبقى لازمة.</p>');
+  if(f.length){h+='<p><b>تصحيحات تمت تلقائيًا ('+f.length+'):</b></p><ul>'+li(f)+'</ul>';}
+  var ses=(D.sessions||[]).map(function(s){return 'الحصة '+s.n+': '+(s.ids||[]).join('، ')+' (نحو '+s.est_min+' دقائق من العمل الرقمي)';});
+  if(ses.length){h+='<p><b>توزيع الأهداف على الحصص</b> (زمن الحصة المحدد '+esc(meta.session_minutes||'')+' دقيقة؛ التقدير حسابي ولم يُجرَّب مع طلبة):</p><ul>'+li(ses)+'</ul>';}
+  var rf=(D.objectives||[]).map(function(o){return o.id+': '+(o.guide_ref?('دليل المعلم: «'+o.guide_ref+'»'):'لا ربط بدليل المعلم')+(o.competency?(' | الكفاية: '+o.competency):'')+(o.depends_on&&o.depends_on.length?(' | يعتمد على: '+o.depends_on.join('، ')):'');});
+  h+='<p><b>ربط الأهداف بالمصادر:</b></p><ul>'+li(rf)+'</ul>';
+  if(meta.final_marks){h+='<p><b>علامة التقويم الختامي المعتمدة:</b> '+esc(meta.final_marks)+'. التقويم الرقمي ذاتي ولا يُحسب عليها؛ لتحويل نتيجته: العلامة = (عدد الصحيح ÷ عدد البنود) × '+esc(meta.final_marks)+'.</p>';}
+  h+='<p><b>إعدادات هذا الملف:</b> حفظ التقدم محليًا: '+(SAVE?'مفعّل':'مغلق')+'، التقويم الرقمي: '+(FINALON?'مفعّل':'مغلق')+'.</p>';
+  h+='<p><b>قائمة مراجعة سريعة:</b></p><ul><li>هل المعلومات صحيحة وموافقة لدرسك؟</li><li>هل الأسئلة واضحة وإجاباتها الصحيحة صحيحة فعلًا؟</li><li>هل لعبة المطابقة والنشاط البديل مناسبان لطلبتك؟</li><li>هل ما ورد في الأمثلة مناسب للسياق المحلي؟</li><li>هل المخططات التوضيحية صحيحة وعباراتها العربية واضحة؟</li></ul></details>';
+  document.getElementById('foot').insertAdjacentHTML('afterbegin',h);
+})();
+start();
+})();
+</script>
+</body>
+</html>
